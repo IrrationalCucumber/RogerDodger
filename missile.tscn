@@ -1,0 +1,93 @@
+[gd_scene load_steps=16 format=3 uid="uid://cyy38qxipjodn"]
+
+[ext_resource type="Script" path="res://missile.gd" id="1_agsc8"]
+[ext_resource type="Texture2D" uid="uid://baqhdecd3t3ge" path="res://art/missile_design_1.1.png" id="1_l03jr"]
+[ext_resource type="Texture2D" uid="uid://kkkl07vl416q" path="res://art/missile_design_1.2.png" id="2_ga5qt"]
+[ext_resource type="Texture2D" uid="uid://6hlt1yivv1bf" path="res://art/missile_design_1.3.png" id="3_cvptx"]
+[ext_resource type="Texture2D" uid="uid://byxlme8upg2f3" path="res://art/missile_design_1.png" id="4_crfy6"]
+[ext_resource type="Texture2D" uid="uid://crn6clh4tssta" path="res://art/missile_design_2.1.png" id="5_ifs8v"]
+[ext_resource type="Texture2D" uid="uid://diy6v2qtw7415" path="res://art/missile_design_2.2.png" id="6_2v06f"]
+[ext_resource type="Texture2D" uid="uid://cqoncp35xrnrq" path="res://art/missile_design_2.3.png" id="7_vtsoj"]
+[ext_resource type="Texture2D" uid="uid://omtxv7n23jsp" path="res://art/missile_design_2.png" id="8_0iuo1"]
+[ext_resource type="Texture2D" uid="uid://cxk5vqt342tj2" path="res://art/missile_design_3.png" id="9_vvn4t"]
+[ext_resource type="Texture2D" uid="uid://dqgj1iaj1f451" path="res://art/missile_design_3.2.png" id="10_tvxhq"]
+[ext_resource type="Texture2D" uid="uid://db4rox8omefb" path="res://art/missile_design_3.1.png" id="11_1jxme"]
+[ext_resource type="Texture2D" uid="uid://bhgxk3rep2vun" path="res://art/missile_design_3.3.png" id="12_qbn6q"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qk3bn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_l03jr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ga5qt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cvptx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_crfy6")
+}],
+"loop": true,
+"name": &"missile1",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ifs8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2v06f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vtsoj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_0iuo1")
+}],
+"loop": true,
+"name": &"missile2",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_vvn4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_tvxhq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_1jxme")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_qbn6q")
+}],
+"loop": true,
+"name": &"missile3",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qobnu"]
+radius = 5.0
+height = 96.0
+
+[node name="Missile" type="RigidBody2D" groups=["missile"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_agsc8")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_qk3bn")
+animation = &"missile3"
+frame_progress = 0.716101
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_qobnu")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://dyg5hf6bpw4a4"]
+
+[ext_resource type="Texture2D" uid="uid://v3anrttrtbph" path="res://art/Tank_idle1.png" id="1_6qma7"]
+[ext_resource type="Script" path="res://tank.gd" id="1_d2eo5"]
+[ext_resource type="Texture2D" uid="uid://dg474a41iyi41" path="res://art/Tank_idle2.png" id="2_ut1ch"]
+[ext_resource type="Texture2D" uid="uid://ddwejpt8sjc0b" path="res://art/Tank_running1.png" id="3_2lpai"]
+[ext_resource type="Texture2D" uid="uid://bgrm6b1yaoum2" path="res://art/Tank_running2.png" id="4_y25vr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ytm4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6qma7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ut1ch")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2lpai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_y25vr")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6i35m"]
+radius = 27.0
+height = 70.0
+
+[node name="Tank" type="Area2D"]
+position = Vector2(68, 591)
+script = ExtResource("1_d2eo5")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_2ytm4")
+animation = &"running"
+frame = 1
+frame_progress = 0.809991
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6i35m")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

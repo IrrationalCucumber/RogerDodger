@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://f2713g7yx7no"]
+
+[ext_resource type="PackedScene" uid="uid://dyg5hf6bpw4a4" path="res://tank.tscn" id="1_o1cdh"]
+[ext_resource type="Script" path="res://main.gd" id="1_xpxgo"]
+[ext_resource type="PackedScene" uid="uid://cyy38qxipjodn" path="res://missile.tscn" id="2_p5v27"]
+[ext_resource type="PackedScene" uid="uid://cjjal33v1pdrf" path="res://hud.tscn" id="4_6esvr"]
+
+[sub_resource type="Curve2D" id="Curve2D_85k5s"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, 320, 0, 0, 0, 0, -48, -32, 0, 0, 0, 0, 1200, -48, 0, 0, 0, 0, 1192, 312, 0, 0, 0, 0, 1200, 312)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_xpxgo")
+missile_scene = ExtResource("2_p5v27")
+
+[node name="Tank" parent="." instance=ExtResource("1_o1cdh")]
+
+[node name="MissileTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(576, 592)
+
+[node name="MissilePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_85k5s")
+
+[node name="MissileSpawnLocation" type="PathFollow2D" parent="MissilePath"]
+position = Vector2(-64, 320)
+rotation = -1.52537
+
+[node name="HUD" parent="." instance=ExtResource("4_6esvr")]
+
+[connection signal="hit" from="Tank" to="." method="game_over"]
+[connection signal="timeout" from="MissileTimer" to="." method="_on_missile_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
